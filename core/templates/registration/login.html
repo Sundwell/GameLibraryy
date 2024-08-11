@@ -73,18 +73,18 @@
 <body>
     <div class="login">
         <h2 class="active">Вход</h2>
-        <h2 class="nonactive"><a href="{% url 'register' %}">Войти</a></h2>
+        <h2 class="nonactive"><a href="{% url 'core:register' %}">Войти</a></h2>
         <form method="post">
             {% csrf_token %}
             {{ form.username.label_tag }} {{ form.username }}
             {{ form.password.label_tag }} {{ form.password }}
             <input type="checkbox" id="checkbox-1-1" class="custom-checkbox" />
             <label for="checkbox-1-1">Запомнить меня</label>
-            <button type="submit" class="signin">Войти</button>
+            <button type="submit">Войти</button>
             <hr>
             <a href="#">Забыли пароль?</a>
         </form>
-        <p>Еще нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь здесь</a>.</p>
+        <p>Еще нет аккаунта? <a href="{% url 'core:register' %}">Зарегистрируйтесь здесь</a>.</p>
     </div>
 </body>
 </html>
