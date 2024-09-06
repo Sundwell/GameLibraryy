@@ -1,10 +1,10 @@
 {% load static %}
 
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Вход</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <style>
         body {
@@ -25,16 +25,7 @@
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.8); {# Полупрозрачный белый фон для контраста #}
-        }
-        .login h2.active, .login h2.nonactive {
-            cursor: pointer;
-        }
-        .login h2.active {
-            color: #000;
-        }
-        .login h2.nonactive {
-            color: #999;
+            background: rgba(255, 255, 255, 0.8);
         }
         .login input[type="text"], .login input[type="password"] {
             width: 100%;
@@ -46,7 +37,7 @@
         .login input[type="checkbox"] {
             margin-right: 10px;
         }
-        .login button.signin {
+        .login button {
             width: 100%;
             padding: 10px;
             background-color: #000;
@@ -64,28 +55,65 @@
             margin: 10px 0;
             color: #000;
         }
-        .login span {
-            display: block;
+        .login .error {
+            color: red;
             margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="login">
-        <h2 class="active">Вход</h2>
-        <h2 class="nonactive"><a href="{% url 'core:register' %}">Войти</a></h2>
+        <h2><a href="{% url 'core:login' %}">Логин</a></h2>
         <form method="post">
             {% csrf_token %}
-            {{ form.username.label_tag }} {{ form.username }}
-            {{ form.password.label_tag }} {{ form.password }}
-            <input type="checkbox" id="checkbox-1-1" class="custom-checkbox" />
-            <label for="checkbox-1-1">Запомнить меня</label>
+            {% if form.non_field_errors %}
+                <div class="error">
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="error">
+                        <ul>
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div>
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="error">
+                        <ul>
+                            {% for error in form.password.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <input type="checkbox" id="checkbox-1-1" />
+                <label for="checkbox-1-1">Запомнить меня</label>
+            </div>
+
             <button type="submit">Войти</button>
             <hr>
-            <a href="#">Забыли пароль?</a>
+             <a href="#">Забыли пароль?</a>
+            <p>Еще нет аккаунта? <a href="{% url 'core:register' %}">Зарегистрируйтесь здесь</a>.</p>
+            <a href="{% url 'core:index' %}">Вернуться на главную</a>
         </form>
-        <p>Еще нет аккаунта? <a href="{% url 'core:register' %}">Зарегистрируйтесь здесь</a>.</p>
     </div>
 </body>
 </html>
-

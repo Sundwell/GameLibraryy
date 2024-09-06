@@ -6,7 +6,7 @@ from games.models import Game
 
 
 class IndexView(ListView):
-    template_name = 'game_list.html'
+    template_name = 'index.html'
     model = Game
     context_object_name = 'games'
 

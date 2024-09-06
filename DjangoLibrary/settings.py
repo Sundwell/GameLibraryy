@@ -62,10 +62,7 @@ ROOT_URLCONF = 'DjangoLibrary.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR / 'templates',
-            BASE_DIR / 'core' / 'templates'
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'games', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,5 +139,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirect URLs
-LOGIN_REDIRECT_URL = 'index'
-LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'core:index'
+LOGIN_URL = 'core:login'

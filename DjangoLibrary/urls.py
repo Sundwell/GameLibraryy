@@ -14,21 +14,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
-from django.urls.conf import include
-
+from django.urls import path, include
 from django.conf import settings
-from games.views import IndexView, GameCreateView, GameDeleteView, GameView, GameEditView
+from django.conf.urls.static import static
+from games.views import GameCreateView, GameDeleteView, GameView, GameEditView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', IndexView.as_view(), name='index'),
+    path('', include('core.urls')),
     path('game-delete/<int:pk>/', GameDeleteView.as_view(), name='game-delete'),
-    path('game-create/', GameCreateView.as_view(), name="game-create"),
-    path('game-info/<int:pk>/', GameView.as_view(), name="game-info"),
-    path('game-edit/<int:pk>/', GameEditView.as_view(), name="game-edit"),
-    path('core/', include(('core.urls', 'core'), namespace='core')),
-    path("__debug__/", include("debug_toolbar.urls")),
+    path('game-create/', GameCreateView.as_view(), name='game-create'),
+    path('game-info/<int:pk>/', GameView.as_view(), name='game-info'),
+    path('game-edit/<int:pk>/', GameEditView.as_view(), name='game-edit'),
+    path('__debug__/', include('debug_toolbar.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
