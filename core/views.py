@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import FormView
@@ -26,3 +27,9 @@ class UserLoginView(FormView):
         user = form.get_user()
         login(self.request, user)
         return super().form_valid(form)
+
+
+class CustomLogoutView(LogoutView):
+    template_name = 'base.html'
+    next_page = reverse_lazy('core:register')
+

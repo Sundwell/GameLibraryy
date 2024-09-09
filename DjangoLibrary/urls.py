@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from games.views import GameCreateView, GameDeleteView, GameView, GameEditView
+from games.views import GameCreateView, GameDeleteView, GameView, GameEditView, IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
+    path('', IndexView.as_view(), name='index'),
     path('game-delete/<int:pk>/', GameDeleteView.as_view(), name='game-delete'),
     path('game-create/', GameCreateView.as_view(), name='game-create'),
     path('game-info/<int:pk>/', GameView.as_view(), name='game-info'),
