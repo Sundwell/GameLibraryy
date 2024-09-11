@@ -1,40 +1,35 @@
-from django.urls import reverse
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-
-from core.forms import GameCreate
-from core.models import Game
-
-
-class IndexView(ListView):
-    template_name = 'game_list.html'
-    model = Game
-    context_object_name = 'games'
+from django.contrib.auth import login
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.views.generic import FormView
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomUserCreationForm
 
 
-class GameCreateView(CreateView):
-    template_name = 'game_create.html'
-    form_class = GameCreate
+class RegisterView(FormView):
+    form_class = CustomUserCreationForm
+    template_name = 'registration/register.html'
     success_url = '/'
 
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return super().form_valid(form)
 
-class GameDeleteView(DeleteView):
-    template_name = 'game_delete.html'
-    model = Game
+
+class UserLoginView(FormView):
+    form_class = AuthenticationForm
+    template_name = 'registration/login.html'
     success_url = '/'
 
+    def form_valid(self, form):
+        user = form.get_user()
+        login(self.request, user)
+        return super().form_valid(form)
 
-class GameView(DeleteView):
-    template_name = 'game_info.html'
-    model = Game
-    context_object_name = 'game'
 
-
-class GameEditView(UpdateView):
-    template_name = 'game_edit.html'
-    model = Game
-    fields = ('name', 'genre', 'developer', 'difficulty', 'icon')
-
-    def get_success_url(self):
-        return reverse('game-info', kwargs={'pk': self.object.pk})
-
+class CustomLogoutView(LogoutView):
+    template_name = 'base.html'
+    next_page = reverse_lazy('core:register')
 
