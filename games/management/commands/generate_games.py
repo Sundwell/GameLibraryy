@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from games.models import Game  # замените `myapp` на имя вашего приложения
+from games.models import Game
 import random
 
 
@@ -16,6 +16,6 @@ class Command(BaseCommand):
             name = f'Game {random.randint(1, 10000)}'
             genre = 'Genre'
             developer = 'Developer'
-            difficulty = random.choice(difficulties)  # Выбираем случайное значение для difficulty
+            difficulty = random.choice(difficulties)
             Game.objects.create(name=name, genre=genre, developer=developer, difficulty=difficulty)
             self.stdout.write(self.style.SUCCESS(f'Successfully generated game: {name} with difficulty: {difficulty}'))

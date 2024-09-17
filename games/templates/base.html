@@ -31,7 +31,15 @@
                 <h2>Welcome back, {{ user.username }}!</h2>
             </div>
             {% block content %}
-            <!-- Content for logged-in users goes here -->
+             <script>
+            // Таймер на 5 секунд
+            setTimeout(function() {
+                const welcomeMessage = document.getElementById('welcome-message');
+                if (welcomeMessage) {
+                    welcomeMessage.style.display = 'none';  // Скрыть элемент
+                }
+            }, 5000); // 5000 миллисекунд = 5 секунд
+        </script>
             {% endblock content %}
         {% else %}
             <p class="text-muted">Please log in or register to access more features.</p>
