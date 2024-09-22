@@ -61,7 +61,7 @@
 </head>
 <body>
     <div class="register">
-        <h2><a href="{% url 'core:register' %}">Регистрация</a></h2>
+        <h2><a>Регистрация</a></h2>
         <form method="post">
             {% csrf_token %}
             {% if form.non_field_errors %}
