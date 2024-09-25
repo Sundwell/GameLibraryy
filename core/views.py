@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.views import LogoutView
 from django.urls import reverse_lazy
@@ -26,6 +27,9 @@ class UserLoginView(FormView):
     def form_valid(self, form):
         user = form.get_user()
         login(self.request, user)
+
+        messages.success(self.request, f'Welcome back, {user.username}!')
+
         return super().form_valid(form)
 
 

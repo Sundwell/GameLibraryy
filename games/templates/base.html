@@ -26,31 +26,34 @@
     </header>
 
     <main class="container mt-5">
-        {% if user.is_authenticated %}
-            <div class="alert alert-success" id="welcome-message">
-                <h2>Welcome back, {{ user.username }}!</h2>
-            </div>
-        {% endif %}
+    {% if messages %}
+        <div class="alert alert-success">
+            <h2>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </h2>
+        </div>
+        <script>
+            // Таймер на 5 секунд для скрытия приветственного сообщения
+            setTimeout(function() {
+                const alert = document.querySelector('.alert');
+                if (alert) {
+                    alert.style.display = 'none';  // Скрыть элемент
+                }
+            }, 5000); // 5000 миллисекунд = 5 секунд
+        </script>
+    {% endif %}
 
-        <!-- Остальной контент на странице, который не будет скрыт -->
-        <section class="main-content">
-            {% block content %}
-            <!-- Ваша динамическая часть, например, список игр или форма для их добавления -->
-            <h3>Your Games:</h3>
-            <p>Here you can manage your game library.</p>
-            {% endblock %}
-        </section>
+    <!-- Остальной контент на странице, который не будет скрыт -->
+    <section class="main-content">
+        {% block content %}
+        <!-- Ваша динамическая часть, например, список игр или форма для их добавления -->
+        <h3>Your Games:</h3>
+        <p>Here you can manage your game library.</p>
+        {% endblock %}
+    </section>
     </main>
-
-    <script>
-        // Таймер на 5 секунд для скрытия приветственного сообщения
-        setTimeout(function() {
-            const welcomeMessage = document.getElementById('welcome-message');
-            if (welcomeMessage) {
-                welcomeMessage.style.display = 'none';  // Скрыть элемент
-            }
-        }, 5000); // 5000 миллисекунд = 5 секунд
-    </script>
 
 </body>
 </html>
